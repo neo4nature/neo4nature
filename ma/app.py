@@ -494,18 +494,16 @@ def _bootstrap_default_users():
     existing = list_usernames(BASE_DIR)
     if existing:
         return
-    # Create defaults with password 'demo'
-    for u in ["Neo", "Lira"]:
+    _demo_pw = os.getenv("MA_DEMO_PASSWORD", secrets.token_hex(12))
+    for u in ["alice", "bob"]:
         try:
-            create_user(BASE_DIR, u, "demo")
+            create_user(BASE_DIR, u, _demo_pw)
         except Exception:
             pass
-    # ensure keys + accounts
-    ensure_user_records(["Neo", "Lira"])
-    # encrypt wallet keys for demo users
+    ensure_user_records(["alice", "bob"])
     try:
-        for u in ["Neo", "Lira"]:
-            ensure_wallet_secret(u, "demo")
+        for u in ["alice", "bob"]:
+            ensure_wallet_secret(u, _demo_pw)
     except Exception:
         pass
 
@@ -613,7 +611,7 @@ def login():
 def fid_challenge():
     """Create a short-lived challenge for wallet-based login.
 
-    Request JSON: {"username": "Neo"}
+    Request JSON: {"username": "alice"}
     Response JSON: {challenge, payload_hash_b64}
     """
     data = request.get_json(silent=True) or {}
@@ -666,7 +664,7 @@ def fid_login_wallet():
     """One-shot wallet login helper (server asks walletd to sign).
 
     Useful for the prototype where the browser doesn't talk to the wallet directly.
-    Request JSON: {"username": "Neo"}
+    Request JSON: {"username": "alice"}
     Response JSON: {ok, username}
     """
     data = request.get_json(silent=True) or {}

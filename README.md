@@ -72,6 +72,8 @@ If you want to explore how broad thinking can survive contact with implementatio
 Please read `CONTRIBUTING.md` before opening issues or pull requests.
 We welcome ideas, code, structural critiques, and new perspectives — but always in relation to the whole system, not just a local fragment.
 
+> Created by Neo, co-shaped with Lira (ChatGPT), with additional engineering support from Soryel (Claude).
+
 ## One sentence
 
 This is not only a project about AI.
